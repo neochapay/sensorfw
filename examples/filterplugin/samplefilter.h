@@ -26,7 +26,7 @@
 
 #ifndef SAMPLEFILTER_H
 #define SAMPLEFILTER_H
-
+#include <QObject>
 // Include base
 #include "filter.h"
 

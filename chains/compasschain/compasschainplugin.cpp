@@ -38,8 +38,14 @@ void CompassChainPlugin::Register(class Loader&)
 QStringList CompassChainPlugin::Dependencies() {
     QByteArray orientationConfiguration = SensorFrameworkConfig::configuration()->value("plugins/orientationadaptor").toByteArray();
     if (orientationConfiguration.isEmpty()) {
-        return QString("accelerometerchain:magcalibrationchain:declinationfilter:downsamplefilter:avgaccfilter").split(":", QString::SkipEmptyParts);
-    } else {
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+        return QString("accelerometerchain:magcalibrationchain:declinationfilter:downsamplefilter:avgaccfilter").split(":", QString::SkipEmptyParts);        
+    } else {        
         return QString("accelerometerchain:magcalibrationchain:declinationfilter:downsamplefilter:avgaccfilter:orientationadaptor").split(":", QString::SkipEmptyParts);
+#else
+        return QString("accelerometerchain:magcalibrationchain:declinationfilter:downsamplefilter:avgaccfilter").split(":", Qt::SkipEmptyParts);
+    } else {
+        return QString("accelerometerchain:magcalibrationchain:declinationfilter:downsamplefilter:avgaccfilter:orientationadaptor").split(":", Qt::SkipEmptyParts);
+#endif
     }
 }

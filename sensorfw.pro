@@ -80,9 +80,9 @@ contains(CONFIG,hybris) {
     include( common-install.pri )
     include( common-config.pri )
 
-    PKGCONFIGFILES.files = sensord-qt5.pc
+    PKGCONFIGFILES.files = sensord-qt$${QT_MAJOR_VERSION}.pc
     PKGCONFIGFILES.commands = 'sed -i "s/Version:.*/Version: $$PC_VERSION/" $$_PRO_FILE_PWD_/sensord-qt5.pc'
-    QTCONFIGFILES.path = /usr/share/qt5/mkspecs/features
+    QTCONFIGFILES.path = /usr/share/qt$${QT_MAJOR_VERSION}/mkspecs/features
 }
 
 

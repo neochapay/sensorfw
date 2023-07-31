@@ -29,7 +29,7 @@ profile-libc {
   QMAKE_LFLAGS += -lc_p
 }
 
-TARGET = $$TARGET-qt5
+TARGET = $$TARGET-qt$${QT_MAJOR_VERSION}
 
 OTHER_FILES += \
     ../../common.pri
@@ -48,3 +48,6 @@ config_hybris {
     CONFIG += link_pkgconfig
     PKGCONFIG += android-headers libhardware
 }
+
+DISTFILES += \
+    $$PWD/sensord-qt6.pc.in

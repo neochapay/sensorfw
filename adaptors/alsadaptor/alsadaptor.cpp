@@ -200,7 +200,11 @@ void ALSAdaptor::processSample(int pathId, int fd)
             sensordLogW() << id() << "read(): " << strerror(errno);
             return;
         }
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
         QVariant value(buffer);
+#else
+        QVariant value((QString(buffer)));
+#endif
         bool ok;
         double fValue(value.toDouble(&ok));
         if(!ok) {

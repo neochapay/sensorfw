@@ -139,7 +139,11 @@ QDBusReply<void> AbstractSensorChannelInterface::start(int sessionId)
     connect(pimpl_->m_socketReader.socket(), SIGNAL(readyRead()), this, SLOT(dataReceived()));
 
     QList<QVariant> argumentList;
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     argumentList << qVariantFromValue(sessionId);
+#else
+    argumentList << QVariant::fromValue(sessionId);
+#endif
 
     QDBusPendingReply <void> returnValue = pimpl_->asyncCallWithArgumentList(QLatin1String("start"), argumentList);
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(returnValue, this);
@@ -177,7 +181,11 @@ QDBusReply<void> AbstractSensorChannelInterface::stop(int sessionId)
     disconnect(pimpl_->m_socketReader.socket(), SIGNAL(readyRead()), this, SLOT(dataReceived()));
 
     QList<QVariant> argumentList;
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     argumentList << qVariantFromValue(sessionId);
+#else
+    argumentList << QVariant::fromValue(sessionId);
+#endif
 
     QDBusPendingReply <void> returnValue = pimpl_->asyncCallWithArgumentList(QLatin1String("stop"), argumentList);
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(returnValue, this);
@@ -202,7 +210,11 @@ QDBusReply<void> AbstractSensorChannelInterface::setInterval(int sessionId, int 
     clearError();
 
     QList<QVariant> argumentList;
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     argumentList << qVariantFromValue(sessionId) << qVariantFromValue(interval_ms);
+#else
+    argumentList << QVariant::fromValue(sessionId) << QVariant::fromValue(interval_ms);
+#endif
     QDBusPendingReply <void> returnValue = pimpl_->asyncCallWithArgumentList(QLatin1String("setInterval"), argumentList);
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(returnValue, this);
     connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
@@ -226,7 +238,11 @@ QDBusReply<void> AbstractSensorChannelInterface::setDataRate(int sessionId, doub
     clearError();
 
     QList<QVariant> argumentList;
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     argumentList << qVariantFromValue(sessionId) << qVariantFromValue(dataRate_Hz);
+#else
+    argumentList << QVariant::fromValue(sessionId) << QVariant::fromValue(dataRate_Hz);
+#endif
     QDBusPendingReply <void> returnValue = pimpl_->asyncCallWithArgumentList(QLatin1String("setDataRate"), argumentList);
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(returnValue, this);
     connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
@@ -250,7 +266,11 @@ QDBusReply<void> AbstractSensorChannelInterface::setBufferInterval(int sessionId
     clearError();
 
     QList<QVariant> argumentList;
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     argumentList << qVariantFromValue(sessionId) << qVariantFromValue(interval_ms);
+#else
+    argumentList << QVariant::fromValue(sessionId) << QVariant::fromValue(interval_ms);
+#endif
     QDBusPendingReply <void> returnValue = pimpl_->asyncCallWithArgumentList(QLatin1String("setBufferInterval"), argumentList);
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(returnValue, this);
     connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
@@ -275,7 +295,11 @@ QDBusReply<void> AbstractSensorChannelInterface::setBufferSize(int sessionId, un
     clearError();
 
     QList<QVariant> argumentList;
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     argumentList << qVariantFromValue(sessionId) << qVariantFromValue(value);
+#else
+    argumentList << QVariant::fromValue(sessionId) << QVariant::fromValue(value);
+#endif
 
     QDBusPendingReply <void> returnValue = pimpl_->asyncCallWithArgumentList(QLatin1String("setBufferSize"), argumentList);
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(returnValue, this);
@@ -300,7 +324,11 @@ QDBusReply<bool> AbstractSensorChannelInterface::setStandbyOverride(int sessionI
     clearError();
 
     QList<QVariant> argumentList;
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     argumentList << qVariantFromValue(sessionId) << qVariantFromValue(value);
+#else
+    argumentList << QVariant::fromValue(sessionId) << QVariant::fromValue(value);
+#endif
     QDBusPendingReply <void> returnValue = pimpl_->asyncCallWithArgumentList(QLatin1String("setStandbyOverride"), argumentList);
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(returnValue, this);
     connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
@@ -332,13 +360,21 @@ DataRange AbstractSensorChannelInterface::getCurrentDataRange()
 void AbstractSensorChannelInterface::requestDataRange(DataRange range)
 {
     clearError();
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     call(QDBus::NoBlock, QLatin1String("requestDataRange"), qVariantFromValue(pimpl_->m_sessionId), qVariantFromValue(range));
+#else
+    call(QDBus::NoBlock, QLatin1String("requestDataRange"), QVariant::fromValue(pimpl_->m_sessionId), QVariant::fromValue(range));
+#endif
 }
 
 void AbstractSensorChannelInterface::removeDataRangeRequest()
 {
     clearError();
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     call(QDBus::NoBlock, QLatin1String("removeDataRangeRequest"), qVariantFromValue(pimpl_->m_sessionId));
+#else
+    call(QDBus::NoBlock, QLatin1String("removeDataRangeRequest"), QVariant::fromValue(pimpl_->m_sessionId));
+#endif
 }
 
 DataRangeList AbstractSensorChannelInterface::getAvailableIntervals()
@@ -499,7 +535,11 @@ bool AbstractSensorChannelInterface::setDataRangeIndex(int dataRangeIndex)
 {
     clearError();
     QList<QVariant> argumentList;
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     argumentList << qVariantFromValue(pimpl_->m_sessionId) << qVariantFromValue(dataRangeIndex);
+#else
+    argumentList << QVariant::fromValue(pimpl_->m_sessionId) << QVariant::fromValue(dataRangeIndex);
+#endif
 
     QDBusPendingReply <bool> returnValue = pimpl_->asyncCallWithArgumentList(QLatin1String("setDataRangeIndex"), argumentList);
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(returnValue, this);
@@ -564,7 +604,11 @@ QDBusReply<void> AbstractSensorChannelInterface::setDownsampling(int sessionId, 
     clearError();
 
     QList<QVariant> argumentList;
-    argumentList << qVariantFromValue(sessionId) << qVariantFromValue(value);    
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+    argumentList << qVariantFromValue(sessionId) << qVariantFromValue(value);
+#else
+    argumentList << QVariant::fromValue(sessionId) << QVariant::fromValue(value);
+#endif
     QDBusPendingReply <void> returnValue = pimpl_->asyncCallWithArgumentList(QLatin1String("setDownsampling"), argumentList);
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(returnValue, this);
     connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
